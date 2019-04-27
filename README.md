@@ -7,6 +7,7 @@
 RESOURCES:
 
 https://www.youtube.com/watch?v=T2fPKUfmnKo
+
 https://codereview.stackexchange.com/questions/86421/line-segment-to-circle-collision-algorithm
 
 
