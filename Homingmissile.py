@@ -1237,7 +1237,8 @@ if __name__ == '__main__':
 
         def update(self):
             # self.rect = self.rect.clamp(SCREENRECT)
-            self.rect.center = self.position
+            self.image = Enemy.images
+            self.rect = self.image.get_rect(center=self.position)
             self.position += self.vector
 
 
@@ -1292,14 +1293,13 @@ if __name__ == '__main__':
     Player._blend = None
 
     target = Enemy(pos_=(SCREENRECT.centerx, SCREENRECT.top + 100), gl_=GL, timing_=0, layer_=0)
-    # GL.GROUP_UNION.add(target)
+    GL.GROUP_UNION.add(target)
 
-    dummy = pygame.sprite.Sprite()
-    dummy.image = SPACE_FIGHTER_SPRITE
-    dummy.rect = dummy.image.get_rect(center=(200, 400))
+    # dummy = pygame.sprite.Sprite()
+    # dummy.image = SPACE_FIGHTER_SPRITE
+    # dummy.rect = dummy.image.get_rect(center=(200, 400))
     # dummy = Enemy(pos_=(GL.player.rect.centerx - 200, SCREENRECT.left -400), gl_=GL, timing_=0, layer_=0)
-
-    GL.GROUP_UNION.add(dummy)
+    # GL.GROUP_UNION.add(dummy)
 
     STOP_GAME = False
     QUIT = False
@@ -1307,7 +1307,7 @@ if __name__ == '__main__':
     em = pygame.sprite.Group()
     hm = pygame.sprite.Group()
 
-    recording = True    # allow recording video
+    recording = False    # allow recording video
     VIDEO = []          # Capture frames
     while not STOP_GAME:
         pygame.event.pump()
@@ -1323,9 +1323,11 @@ if __name__ == '__main__':
                     pygame.event.clear()
 
         for event in pygame.event.get():
+
             if event.type == pygame.MOUSEMOTION:
                 mouse_pos = pygame.mouse.get_pos()
                 target.rect.center = mouse_pos
+                target.position = mouse_pos
                 ...
 
         keys = pygame.key.get_pressed()
@@ -1359,6 +1361,8 @@ if __name__ == '__main__':
                 HomingMissile.screenrect = SCREENRECT
                 mouse_pos = pygame.mouse.get_pos()
                 target.rect.center = mouse_pos
+                target.pos = mouse_pos
+
                 hm = HomingMissile(player_=GL.player,
                                    target_=target,
                                    weapon_=STINGER_MISSILE,
@@ -1438,6 +1442,7 @@ if __name__ == '__main__':
         SCREEN.blit(BACKGROUND, (0, 0))
 
         GL.All.update()
+
         # display the all missile particles
         # if any in the VERTEX_ARRAY_MP
         if len(VERTEX_ARRAY_MP) > 0:
@@ -1456,7 +1461,7 @@ if __name__ == '__main__':
         GL.SC_spaceship.update()
         GL.SC_explosion.update()
 
-        # print(clock.get_fps(), len(VERTEX_ARRAY_MP), GL.FRAME)
+        print(clock.get_fps(), len(VERTEX_ARRAY_MP), GL.FRAME)
         # print(len(GL.PLAYER_GROUP), len(GL.GROUP_UNION))
         GL.FRAME += 1
 
@@ -1550,6 +1555,6 @@ if __name__ == '__main__':
             counter += 1
             pygame.display.flip()
 
-    cv2.destroyAllWindows()
-    video.release()
+        cv2.destroyAllWindows()
+        video.release()
     pygame.quit()
