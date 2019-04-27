@@ -33,6 +33,7 @@ import math
 from math import atan2, cos, sin, pi, degrees, radians
 from MissileParticleFx import MissileParticleFx_improve, VERTEX_ARRAY_MP, missile_particles
 from SoundServer import SoundControl
+from pygame import freetype
 
 DEG_TO_RAD = pi / 180
 RAD_TO_DEG = 1 / DEG_TO_RAD
@@ -1113,7 +1114,7 @@ class EnemyHomingMissile(pygame.sprite.Sprite):
 
 if __name__ == '__main__':
 
-
+    freetype.init(cache_size=64, resolution=72)
     class EnemyWeapons:
 
         def __init__(self, name_: str, sprite_: (pygame.Surface, list), range_: int,
@@ -1243,7 +1244,7 @@ if __name__ == '__main__':
     SCREENRECT = pygame.Rect(0, 0, 800, 1024)
     GL.SCREENRECT = SCREENRECT
     pygame.display.init()
-    SCREEN = pygame.display.set_mode(SCREENRECT.size, pygame.HWSURFACE, 32)
+    SCREEN = pygame.display.set_mode(SCREENRECT.size, pygame.HWACCEL, 32)
     GL.screen = SCREEN
     pygame.init()
     pygame.mixer.pre_init(44100, 16, 2, 4095)
@@ -1305,6 +1306,9 @@ if __name__ == '__main__':
     GL.PAUSE = False
     em = pygame.sprite.Group()
     hm = pygame.sprite.Group()
+
+    recording = True    # allow recording video
+    VIDEO = []          # Capture frames
     while not STOP_GAME:
         pygame.event.pump()
 
@@ -1340,6 +1344,9 @@ if __name__ == '__main__':
 
         if keys[pygame.K_DOWN]:
             GL.player.rect.centery += 6
+
+        if keys[pygame.K_F8]:
+            pygame.image.save(SCREEN, 'Screendump' + str(GL.FRAME) + '.png')
 
         if keys[pygame.K_SPACE]:
             if not (GL.GROUP_UNION.has(hm) or GL.GROUP_UNION.has(em)):
@@ -1442,6 +1449,10 @@ if __name__ == '__main__':
         GL.TIME_PASSED_SECONDS = clock.tick(60)
 
         pygame.display.flip()
+
+        if recording:
+            VIDEO.append(pygame.image.tostring(SCREEN, 'RGB', False))
+
         GL.SC_spaceship.update()
         GL.SC_explosion.update()
 
@@ -1449,4 +1460,96 @@ if __name__ == '__main__':
         # print(len(GL.PLAYER_GROUP), len(GL.GROUP_UNION))
         GL.FRAME += 1
 
+    # Create a video
+    # convert all the image into a AVI file (with 60 fps)
+
+    if recording:
+        import cv2
+        from cv2 import COLOR_RGBA2BGR
+
+        import os
+        import numpy
+
+
+        video = cv2.VideoWriter('Video.avi',
+                                cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'), 30, (SCREENRECT.w, SCREENRECT.h), True)
+
+
+        class BuildVideo(object):
+            Video_Icon = None  # Sound icon in the volume control
+            Indicator = None
+
+            def __init__(self,
+                         play_,
+                         scale_=1  # Image re-scaling, scale_ = 1 no rescaling
+                         ):
+                self.length, self.height = 350 * scale_, 72 * scale_
+                self.canvas = pygame.Surface((self.length, self.height)).convert()
+                self.canvas.fill((28, 40, 32, 20))
+
+                if scale_ != 1:
+                    w, h = self.Video_Icon.get_size()
+                    self.Video_Icon = pygame.transform.smoothscale(self.Video_Icon,
+                                                                   (int(w * scale_), int(h * scale_)))
+                    w, h = self.Indicator.get_size()
+                    self.Indicator = pygame.transform.smoothscale(self.Indicator,
+                                                                  (int(w * scale_), int(h * scale_)))
+
+                w, h = self.Video_Icon.get_size()
+                self.canvas.blit(self.Video_Icon, (int(2.85 * self.length / 100),
+                                                   (self.canvas.get_height() - h) // 2))
+
+                w, self.h = self.Indicator.get_size()
+                self.volume = play_
+                self.value = 255
+                self.th = None
+                self.flag = False
+                self.image = None
+                self.scale = scale_
+                self.update_volume(play_)
+
+            def update_volume(self, play_):
+                can = self.canvas.copy()
+                for level in range(int(play_ * 10)):
+                    can.blit(self.Indicator,
+                             (int(22.85 * self.length / 100) + (level * 25 * self.scale),
+                              (self.canvas.get_height() - self.h) // 2))
+                self.value = 255
+                self.flag = False
+                can.set_alpha(self.value)
+                self.image = can
+
+
+        level_icon = pygame.image.load('switchGreen04.png').convert_alpha()
+        level_icon = pygame.transform.rotozoom(level_icon, 90, 0.7)
+
+        BuildVideo.Video_Icon = pygame.image.load('video1.png').convert_alpha()
+        BuildVideo.Video_Icon = pygame.transform.smoothscale(BuildVideo.Video_Icon, (64, 64))
+        BuildVideo.Indicator = level_icon
+
+        font = freetype.Font('ARCADE_R.ttf', size=15)
+        rect1 = font.get_rect("Video capture, please wait...ESC to stop", style=freetype.STYLE_NORMAL, size=15)
+        rect1.center = (SCREENRECT.centerx - rect1.w // 2, SCREENRECT.centery - rect1.h // 2)
+        font.render_to(GL.screen, rect1.center, "Video capture, please wait...ESC to stop",
+                       fgcolor=pygame.Color(255, 255, 255), size=15)
+        pygame.display.flip()
+
+        counter = 0
+        video_bar = BuildVideo(0, 0.4)
+        for event in pygame.event.get():
+            pygame.event.clear()
+
+        for image in VIDEO:
+
+            video_bar.update_volume(counter / len(VIDEO))
+            SCREEN.blit(video_bar.image, ((SCREENRECT.w >> 1) - 175 // 2, (SCREENRECT.h >> 1) + 25))
+            image = numpy.fromstring(image, numpy.uint8).reshape(SCREENRECT.h, SCREENRECT.w, 3)
+            image = cv2.cvtColor(image, COLOR_RGBA2BGR)
+            video.write(image)
+
+            counter += 1
+            pygame.display.flip()
+
+    cv2.destroyAllWindows()
+    video.release()
     pygame.quit()
