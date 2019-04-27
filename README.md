@@ -3,11 +3,15 @@
 Download all the files and execute Homingmissile.exe for a demo 
 
 1) LEAD COLLISION INTERCEPT THEOREM (Thales basic proportionality theorem
+
 class InterceptHomingMissile
    
 2) PURE PURSUIT ALGORITHM  
+
 class HomingMissile
+
 class AdaptiveHomingMissile
+
 class EnemyHomingMissile
    
 
