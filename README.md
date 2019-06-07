@@ -5,7 +5,8 @@
 Download all the files and execute Homingmissile.exe for a demo 
 ```
 
-### Youtube video : https://youtu.be/9egTMLZeLjE
+### Youtube video : 
+https://youtu.be/9egTMLZeLjE
 
 1. LEAD COLLISION INTERCEPT THEOREM (Thales basic proportionality theorem)
 
