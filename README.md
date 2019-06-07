@@ -1,23 +1,27 @@
-# Homing-missile-
+# Homing missile
+
+```
 2D video game guided missile algorithm
 Download all the files and execute Homingmissile.exe for a demo 
+```
 
-Youtube video : https://youtu.be/9egTMLZeLjE
+### Youtube video : https://youtu.be/9egTMLZeLjE
 
-1) LEAD COLLISION INTERCEPT THEOREM (Thales basic proportionality theorem
+1. LEAD COLLISION INTERCEPT THEOREM (Thales basic proportionality theorem)
 
-class InterceptHomingMissile
+   ```
+   class InterceptHomingMissile
+   ```
    
-2) PURE PURSUIT ALGORITHM  
+2. PURE PURSUIT ALGORITHM  
 
-class HomingMissile
+   ```
+   class HomingMissile
+   class AdaptiveHomingMissile
+   class EnemyHomingMissile
+   ```
 
-class AdaptiveHomingMissile
-
-class EnemyHomingMissile
-   
-
-RESOURCES:
+### RESOURCES:
 
 https://www.youtube.com/watch?v=T2fPKUfmnKo
 
