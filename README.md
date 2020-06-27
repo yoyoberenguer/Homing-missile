@@ -15,8 +15,10 @@ ESC       : to exit
 
 ## Cython Version 
 ```
-FOLDER : Cython Version
 Amazing version with many particles and extremely fluid animation.
+
+FOLDER     : Cython Version
+SHORT DEMO : Homing-missile/Cython Version/Video.avi
 
 Run the program HomingMissile.py with your favorite python IDE  ** 
 ** Program must be compiled first (see compilation section)
