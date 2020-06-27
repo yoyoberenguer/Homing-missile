@@ -15,6 +15,8 @@ ESC       : to exit
 
 ## Cython Version 
 ```
+Amazing version with many particles and extremely fluid animation.
+
 Run the program HomingMissile.py with your favorite python IDE  ** 
 ** Program must be compiled first (see compilation section)
 ```
