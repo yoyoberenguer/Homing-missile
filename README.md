@@ -50,20 +50,6 @@ and a C-compiler are correctly install on your system.
 ### Youtube video : 
 https://youtu.be/9egTMLZeLjE
 
-1. LEAD COLLISION INTERCEPT THEOREM (Thales basic proportionality theorem)
-
-   ```
-   class InterceptHomingMissile
-   ```
-   
-2. PURE PURSUIT ALGORITHM  
-
-   ```
-   class HomingMissile
-   class AdaptiveHomingMissile
-   class EnemyHomingMissile
-   ```
-
 ### RESOURCES:
 
 https://www.youtube.com/watch?v=T2fPKUfmnKo
