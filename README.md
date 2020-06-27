@@ -15,6 +15,7 @@ ESC       : to exit
 
 ## Cython Version 
 ```
+FOLDER : Cython Version
 Amazing version with many particles and extremely fluid animation.
 
 Run the program HomingMissile.py with your favorite python IDE  ** 
@@ -42,7 +43,7 @@ Requirment :
 Compilation :
 
 ```
-In a command prompt and under the directory containing the source files
+In a command prompt and under the directory containing the source files (Cython Version folder)
 C:\>python setup_Project.py build_ext --inplace
 
 If the compilation fail, refers to the requirement section and make sure cython 
