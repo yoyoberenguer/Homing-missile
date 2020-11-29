@@ -1,15 +1,43 @@
 # -*- coding: utf-8 -*-
 
-import pygame
+try:
+    import pygame
+except ImportError:
+    raise ImportError("\npygame library is missing on your system."
+                      "\nTry: \n   C:\\pip inatall pygame on a window command prompt.")
+
 from pygame import RLEACCEL, Surface, Color
-from pygame.transform import smoothscale, rotozoom, rotate
 from pygame import freetype
-from numpy import uint8, fromstring
-from cv2 import COLOR_RGBA2BGR, cvtColor, VideoWriter, destroyAllWindows, VideoWriter_fourcc
+try:
+    import numpy
+except ImportError:
+    raise ImportError("\nnumpy library is missing on your system."
+                      "\nTry: \n   C:\\pip install numpy on a window command prompt.")
+from numpy import uint8, fromstring, frombuffer
+
+try:
+    from cv2 import COLOR_RGBA2BGR, cvtColor, VideoWriter, destroyAllWindows, VideoWriter_fourcc
+except ImportError:
+    raise ImportError("\nOpenCv library is missing on your system."
+                      "\nTry: \n   C:\\pip install opencv-python on a window command prompt.")
 from math import pi
-from matplotlib import pyplot as plt
-from MissileParticleFx import VERTEX_ARRAY_MP
-from CythonGlobalVar import CONSTANTS
+try:
+    from matplotlib import pyplot as plt
+except ImportError:
+    raise ImportError("\nmatplotlib library is missing on your system."
+                      "\nTry: \n   C:\\pip install matplotlib on a window command prompt.")
+
+try:
+    from MissileParticleFx import VERTEX_ARRAY_MP
+except ImportError:
+    raise ImportError("\nMissileParticleFx library is missing on your system or is not cynthonized."
+                      "\nTry: \n   C:\\python setup_Project.py build_ext --inplace")
+
+try:
+    from CythonGlobalVar import CONSTANTS
+except ImportError:
+    raise ImportError("\nCythonGlobalVar library is missing on your system or is not cynthonized."
+                      "\nTry: \n   C:\\python setup_Project.py build_ext --inplace")
 
 DEG_TO_RAD = pi / 180.0
 RAD_TO_DEG = 1 / DEG_TO_RAD
@@ -25,16 +53,47 @@ GL.SCREEN = SCREEN
 pygame.init()
 pygame.mixer.pre_init(44100, 16, 2, 4095)
 freetype.init(cache_size=64, resolution=72)
+try:
+    from SoundServer import SoundControl
+except ImportError:
+    raise ImportError("\nSoundServer library is missing on your system or is not cynthonized."
+                      "\nTry: \n   C:\\python setup_Project.py build_ext --inplace")
+try:
+    from Sprites import Sprite, LayeredUpdatesModified, Group
+except ImportError:
+    raise ImportError("\nSprites library is missing on your system or is not cynthonized."
+                      "\nTry: \n   C:\\python setup_Project.py build_ext --inplace")
+try:
+    from Weapon import HomingMissile, ExtraAttributes, InterceptMissile, AdaptiveMissile
+except ImportError:
+    raise ImportError("\nWeapon library is missing on your system or is not cynthonized."
+                      "\nTry: \n   C:\\python setup_Project.py build_ext --inplace")
+try:
+    from Enemy import EnemyClass
+except ImportError:
+    raise ImportError("\nEnemy library is missing on your system or is not cynthonized."
+                      "\nTry: \n   C:\\python setup_Project.py build_ext --inplace")
+try:
+    from Player import PlayerClass
+except ImportError:
+    raise ImportError("\nPlayer library is missing on your system or is not cynthonized."
+                      "\nTry: \n   C:\\python setup_Project.py build_ext --inplace")
+try:
+    from XML_parsing import xml_get_weapon
+except ImportError:
+    raise ImportError("\nXML_parsing library is missing on your system or is not cynthonized."
+                      "\nTry: \n   C:\\python setup_Project.py build_ext --inplace")
+try:
+    from Textures import *
+except ImportError:
+    raise ImportError("\nTextures library is missing on your system or is not cynthonized."
+                      "\nTry: \n   C:\\python setup_Project.py build_ext --inplace")
+try:
+    from Sounds import *
+except ImportError:
+    raise ImportError("\nSounds library is missing on your system or is not cynthonized."
+                      "\nTry: \n   C:\\python setup_Project.py build_ext --inplace")
 
-from SoundServer import SoundControl
-from Sprites import Sprite, LayeredUpdatesModified, Group
-from Weapon import HomingMissile, ExtraAttributes, InterceptMissile, AdaptiveMissile
-from Enemy import EnemyClass
-from Player import PlayerClass
-from XML_parsing import xml_get_weapon
-
-from Textures import *
-from Sounds import *
 
 def xml_parsing(xml_features):
     weapon_features = {}
@@ -149,7 +208,7 @@ if __name__ == '__main__':
 
         GL.PLAYER = PlayerClass(containers_=(GL.ALL, GL.PLAYER_GROUP),
                                 image_=COBRA,
-                                pos_=(SCREENRECT.centerx, SCREENRECT.bottom + 100),
+                                pos_=(SCREENRECT.centerx, SCREENRECT.bottom - 300),
                                 gl_=GL, timing_=60.0, layer_=0, _blend=0)
 
         # CREATE AN ENEMY INSTANCE
@@ -505,7 +564,7 @@ if __name__ == '__main__':
 
                 video_bar.update_meter(counter / c1)
                 screen_blit(video_bar.image, (c2, c3))
-                image = fromstring(image, uint8).reshape(SCREENRECT.h, SCREENRECT.w, 3)
+                image = frombuffer(image, uint8).reshape(SCREENRECT.h, SCREENRECT.w, 3)
                 # image = numpy.frombuffer(image, dtype=numpy.uint8).reshape(SCREENRECT.h, SCREENRECT.w, 4)
                 # image_ = numpy.array(image, dtype=numpy.uint8).transpose(1, 0, 2)
                 # SCREEN.fill((0, 0, 0, 0))
