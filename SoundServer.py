@@ -1,17 +1,4 @@
 # encoding: utf-8
-"""
-
-                   GNU GENERAL PUBLIC LICENSE
-
-                       Version 3, 29 June 2007
-
-
- Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
-
- Everyone is permitted to copy and distribute verbatim copies
-
- of this license document, but changing it is not allowed.
- """
 
 import pygame
 import time as time_t
@@ -40,7 +27,7 @@ class SoundObject:
                                                                 # priority object are kept alive)
         self.time = time_t.time()                               # start time
         self.name = name_                                       # represents the sound name
-        self.length = sound_.get_length()                       # Sound length in seconds
+        self.length = sound_.get_length()                       # Sound width in seconds
         self.active_channel = channel_                          # self.active_channel represent the numeric value
                                                                 # of the channel playing the sound
         self.id = id(self)                                      # SoundObject id number
@@ -122,7 +109,7 @@ class SoundControl:
         for object_ in self.snd_obj:
             if object_ is not None:
                 print('Name :', object_.name, 'id ', object_.id, ' priority ', object_.priority,
-                      ' channel ', object_.active_channel, ' length ', round(object_.length, 2),
+                      ' channel ', object_.active_channel, ' width ', round(object_.length, 2),
                       ' time left : ', round(self.snd_obj[j_].length - (time_t.time() - self.snd_obj[j_].time), 2))
             j_ += 1
 
@@ -159,8 +146,9 @@ class SoundControl:
          """
         for ch in list_:
                 l = ch - self.start
-                if self.snd_obj[l].priority == 0:
-                    self.channels[l].stop()
+                if self.snd_obj[l] is not None:
+                    if self.snd_obj[l].priority == 0:
+                        self.channels[l].stop()
         self.update()
 
     def stop_all_except(self, exception:int=None):
@@ -196,7 +184,7 @@ class SoundControl:
     def stop_name(self, name_: str=""):
         """ stop a pygame.Sound object if playing on any of the channels.
             name_ refer to the name given to the sound when instantiated (e.g 'WHOOSH' name below)
-            GL.SC_spaceship.play(sound_=WHOOSH, loop_=False, priority_=0, volume_=GL.SOUND_LEVEL,
+            GL.MIXER_PLAYER.play(sound_=WHOOSH, loop_=False, priority_=0, volume_=GL.SOUND_LEVEL,
                     fade_out_ms=0, panning_=False, name_='WHOOSH', x_=0)
          """
         for sound in self.snd_obj:
@@ -315,7 +303,7 @@ class SoundControl:
                 # currently playing.
                 return self.channel - 1
 
-            # All channels busy
+            # ALL channels busy
             else:
                 # print('Stopping duplicate sound on channel(s) %s %s ' % (self.get_identical_sounds(sound_), name_))
                 self.stop(self.get_identical_sounds(sound_))
@@ -333,7 +321,7 @@ class SoundControl:
     def stereo_panning(x_):
         # assert isinstance(x_, (float, int)), 'Expecting float got %s ' % type(x_)
         if x_ < 0:
-            # do not play sound for objects outisde the screen
+            # do not play sound for objects outisde the SCREEN
             return 1, 0
 
         elif x_ > SoundControl.SCREENRECT.w:

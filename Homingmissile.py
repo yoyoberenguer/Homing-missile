@@ -224,7 +224,7 @@ class HomingMissile(pygame.sprite.Sprite):
         self.gl_ = gl_  # Global variables
         self.player = player_  # player instance
         self.angle_degrees = 0
-        self.layer = layer_
+        self.layer_ = layer_
         self.bingo = random.randint(90, 110)  # random counter (quantity of fuel)
         self.propulsion = propulsion_  # True | False (delay propulsion)
 
@@ -244,6 +244,12 @@ class HomingMissile(pygame.sprite.Sprite):
         # correspond considering the bitmap orientation
         self.image, self.rect = self.rot_center(
             self.images_copy, self.angle_degrees, self.rect)  # Draw the missile and initialised the rectangle size
+
+        # Apply 60FPS to the missile if MAXFPS is over 60fps
+        if MAXFPS > 60:
+            self.timing = 16.0
+        else:
+            self.timing = 0.0
 
     def sound_fx(self):
         """ Play sound fx using SC_spaceship sound server"""
@@ -322,7 +328,7 @@ class HomingMissile(pygame.sprite.Sprite):
 
                             for r in range(2):
                                 MissileParticleFx_improve(rect_=pygame.math.Vector2(self.rect.center),
-                                                          vector_=self.speed, layer_=self.layer,
+                                                          vector_=self.speed, layer_=self.layer_,
                                                           angle_=self.angle_degrees,
                                                           exhaust_pos_=self.exhaust_abs_position)
 
@@ -330,7 +336,7 @@ class HomingMissile(pygame.sprite.Sprite):
                         for r in range(2):
                             MissileParticleFx_improve(
                                 rect_=pygame.math.Vector2(self.rect.center),
-                                vector_=self.speed, layer_=self.layer,
+                                vector_=self.speed, layer_=self.layer_,
                                 angle_=self.angle_degrees, exhaust_pos_=self.exhaust_abs_position)
 
                     self.rect.center += self.speed
@@ -344,7 +350,7 @@ class HomingMissile(pygame.sprite.Sprite):
                         for r in range(1):
                             MissileParticleFx_improve(
                                 rect_=pygame.math.Vector2(self.rect.center),
-                                vector_=self.speed, layer_=self.layer,
+                                vector_=self.speed, layer_=self.layer_,
                                 angle_=self.angle_degrees, exhaust_pos_=self.exhaust_abs_position)
                     self.bingo -= 1
                     self.rect.center += self.speed
@@ -475,7 +481,7 @@ class AdaptiveHomingMissile(pygame.sprite.Sprite):
         # center of the object the reference point for any transformation.
         self.exhaust_abs_position = pygame.math.Vector2(self.rect.midbottom[0] - self.rect.centerx, \
                                                         self.rect.midbottom[1] - self.rect.centery)
-        self.layer = layer_
+        self.layer_ = layer_
         self.bingo = random.randint(100, 120)  # Randomized value (fuel counter)
         self.propulsion = propulsion_  # Delay propulsion True | False
         self.sound = weapon_.sound_effect
@@ -496,6 +502,11 @@ class AdaptiveHomingMissile(pygame.sprite.Sprite):
         # details
         self.target = self.dummy  # first target is the dummy rect
         self.player = player_  # player instance (who is shooting)
+        # Apply 60FPS to the missile if MAXFPS is over 60fps
+        if MAXFPS > 60:
+            self.timing = 16.0
+        else:
+            self.timing = 0.0
 
     def dummy_target(self):
         self.dummy = pygame.sprite.Sprite()
@@ -606,7 +617,7 @@ class AdaptiveHomingMissile(pygame.sprite.Sprite):
                         if self.particles:
                             for r in range(3):
                                 MissileParticleFx_improve(rect_=pygame.math.Vector2(self.rect.center),
-                                                          vector_=self.velocity, layer_=self.layer,
+                                                          vector_=self.velocity, layer_=self.layer_,
                                                           angle_=self.heading, exhaust_pos_=self.exhaust_abs_position)
                 else:
                     if self.gl_.FRAME - self.start > 2:
@@ -616,7 +627,7 @@ class AdaptiveHomingMissile(pygame.sprite.Sprite):
                     if self.particles:
                         for r in range(3):
                             MissileParticleFx_improve(rect_=pygame.math.Vector2(self.rect.center),
-                                                      vector_=self.velocity, layer_=self.layer,
+                                                      vector_=self.velocity, layer_=self.layer_,
                                                       angle_=self.heading, exhaust_pos_=self.exhaust_abs_position)
 
                 self.rect.center += self.velocity
@@ -629,7 +640,7 @@ class AdaptiveHomingMissile(pygame.sprite.Sprite):
                     if self.gl_.FRAME - self.start > 25 and self.particles:
                         for r in range(2):
                             MissileParticleFx_improve(rect_=pygame.math.Vector2(self.rect.center),
-                                                      vector_=self.velocity, layer_=self.layer,
+                                                      vector_=self.velocity, layer_=self.layer_,
                                                       angle_=self.heading, exhaust_pos_=self.exhaust_abs_position)
                 self.bingo -= 1
                 self.rect.center += self.velocity
@@ -733,7 +744,7 @@ class InterceptHomingMissile(pygame.sprite.Sprite):
         # center of the object the reference point for any transformation.
         self.exhaust_abs_position = pygame.math.Vector2(self.rect.midbottom[0] - self.rect.centerx, \
                                                         self.rect.midbottom[1] - self.rect.centery)
-        self.layer = layer_
+        self.layer_ = layer_
         self.bingo = random.randint(100, 120)  # Randomized value (fuel counter)
         self.propulsion = propulsion_  # Delay propulsion True | False
         self.sound = weapon_.sound_effect
@@ -754,6 +765,11 @@ class InterceptHomingMissile(pygame.sprite.Sprite):
         # details
         self.target = self.dummy  # first target is the dummy rect
         self.player = player_  # player instance (who is shooting)
+        # Apply 60FPS to the missile if MAXFPS is over 60fps
+        if MAXFPS > 60:
+            self.timing = 16.0
+        else:
+            self.timing = 0.0
 
     def dummy_target(self):
         self.dummy = pygame.sprite.Sprite()
@@ -847,7 +863,7 @@ class InterceptHomingMissile(pygame.sprite.Sprite):
                         if self.particles:
                             for r in range(3):
                                 MissileParticleFx_improve(rect_=pygame.math.Vector2(self.rect.center),
-                                                          vector_=self.velocity, layer_=self.layer,
+                                                          vector_=self.velocity, layer_=self.layer_,
                                                           angle_=self.heading, exhaust_pos_=self.exhaust_abs_position)
                 else:
                     if self.gl_.FRAME - self.start > 2:
@@ -857,7 +873,7 @@ class InterceptHomingMissile(pygame.sprite.Sprite):
                     if self.particles:
                         for r in range(3):
                             MissileParticleFx_improve(rect_=pygame.math.Vector2(self.rect.center),
-                                                      vector_=self.velocity, layer_=self.layer,
+                                                      vector_=self.velocity, layer_=self.layer_,
                                                       angle_=self.heading, exhaust_pos_=self.exhaust_abs_position)
 
                 self.rect.center += self.velocity
@@ -870,7 +886,7 @@ class InterceptHomingMissile(pygame.sprite.Sprite):
                     if self.gl_.FRAME - self.start > 2 and self.particles:
                         for r in range(2):
                             MissileParticleFx_improve(rect_=pygame.math.Vector2(self.rect.center),
-                                                      vector_=self.velocity, layer_=self.layer,
+                                                      vector_=self.velocity, layer_=self.layer_,
                                                       angle_=self.heading, exhaust_pos_=self.exhaust_abs_position)
                 self.bingo -= 1
                 self.rect.center += self.velocity
@@ -968,7 +984,7 @@ class EnemyHomingMissile(pygame.sprite.Sprite):
         # center of the object the reference point for any transformation.
         self.exhaust_abs_position = pygame.math.Vector2(self.rect.midbottom[0] - self.rect.centerx, \
                                                         self.rect.midbottom[1] - self.rect.centery)
-        self.layer = layer_
+        self.layer_ = layer_
         self.bingo = random.randint(100, 120)  # Randomized value (fuel counter)
         self.propulsion = propulsion_  # Delay propulsion True | False
         self.sound = weapon_.sound_effect
@@ -978,6 +994,11 @@ class EnemyHomingMissile(pygame.sprite.Sprite):
             self.sound_fx()  # play sound fx
         self.get_vector()  # Get the vector corresponding to the missile direction
         self.start = self.gl_.FRAME  # catch the frame number
+        # Apply 60FPS to the missile if MAXFPS is over 60fps
+        if MAXFPS > 60:
+            self.timing = 16.0
+        else:
+            self.timing = 0.0
 
     def sound_fx(self):
         if not any(self.gl_.SC_explosion.get_identical_id(self._id)):
@@ -1072,11 +1093,11 @@ class EnemyHomingMissile(pygame.sprite.Sprite):
                     # ! Change value if refreshing rate is changing.
                     if self.gl_.FRAME - self.start > 25:
                         MissileParticleFx_improve(rect_=pygame.math.Vector2(self.rect.center),
-                                                  vector_=self.velocity, layer_=self.layer,
+                                                  vector_=self.velocity, layer_=self.layer_,
                                                   angle_=self.heading, exhaust_pos_=self.exhaust_abs_position)
                 else:
                     MissileParticleFx_improve(rect_=pygame.math.Vector2(self.rect.center),
-                                              vector_=self.velocity, layer_=self.layer,
+                                              vector_=self.velocity, layer_=self.layer_,
                                               angle_=self.heading, exhaust_pos_=self.exhaust_abs_position)
 
                 self.rect.center += self.velocity
@@ -1089,7 +1110,7 @@ class EnemyHomingMissile(pygame.sprite.Sprite):
                     if self.gl_.FRAME - self.start > 25:
                         #  self.target.kill()
                         MissileParticleFx_improve(rect_=pygame.math.Vector2(self.rect.center),
-                                                  vector_=self.velocity, layer_=self.layer,
+                                                  vector_=self.velocity, layer_=self.layer_,
                                                   angle_=self.heading, exhaust_pos_=self.exhaust_abs_position)
                 self.bingo -= 1
                 self.rect.center += self.velocity
@@ -1203,7 +1224,7 @@ if __name__ == '__main__':
 
             self.mask = pygame.mask.from_surface(self.image)
             self.gl = gl_
-            self.layer = layer_
+            self.layer_ = layer_
             self.timing = timing_
             self.angle = 0
             self.life = 1000
@@ -1228,7 +1249,7 @@ if __name__ == '__main__':
             self.vector = pygame.math.Vector2(0, 0)
             self.mask = pygame.mask.from_surface(self.image)
             self.gl = gl_
-            self.layer = layer_
+            self.layer_ = layer_
             self.timing = timing_
             self.angle = 0
             self.life = 1000
@@ -1250,7 +1271,7 @@ if __name__ == '__main__':
     pygame.init()
     pygame.mixer.pre_init(44100, 16, 2, 4095)
 
-    BACKGROUND = pygame.image.load('A2.png').convert()
+    BACKGROUND = pygame.image.load('Assets\\A2.png').convert()
 
     clock = pygame.time.Clock()
     GL.TIME_PASSED_SECONDS = clock.tick(60)
@@ -1267,10 +1288,10 @@ if __name__ == '__main__':
     GL.SC_explosion = SoundControl(10)
     GL.SOUND_LEVEL = 1.0
 
-    SPACE_FIGHTER_SPRITE = pygame.image.load('illumDefault11.png').convert_alpha()
+    SPACE_FIGHTER_SPRITE = pygame.image.load('Assets\\illumDefault11.png').convert_alpha()
     SPACE_FIGHTER_SPRITE = pygame.transform.smoothscale(SPACE_FIGHTER_SPRITE, (80, 55))
-    MISSILE_FLIGHT_SOUND = pygame.mixer.Sound('sd_weapon_missile_heavy_01.ogg')
-    STINGER_MISSILE_SPRITE = pygame.image.load('MISSILE0.png').convert_alpha()
+    MISSILE_FLIGHT_SOUND = pygame.mixer.Sound('Assets\\sd_weapon_missile_heavy_01.ogg')
+    STINGER_MISSILE_SPRITE = pygame.image.load('Assets\\MISSILE0.png').convert_alpha()
     STINGER_MISSILE = EnemyWeapons(name_='Missile',
                                    sprite_=STINGER_MISSILE_SPRITE,
                                    range_=SCREENRECT.h,
@@ -1284,7 +1305,7 @@ if __name__ == '__main__':
                                    detonation_dist_=None,
                                    max_rotation_=10)
 
-    COBRA = pygame.image.load('SpaceShip.png').convert_alpha()
+    COBRA = pygame.image.load('Assets\\SpaceShip.png').convert_alpha()
     Player.images = COBRA
     Player.containers = GL.All, GL.PLAYER_GROUP
     Enemy.containers = GL.All, GL.GROUP_UNION
@@ -1309,6 +1330,8 @@ if __name__ == '__main__':
 
     recording = False    # allow recording video
     VIDEO = []          # Capture frames
+
+    dt = 0.0
     while not STOP_GAME:
         pygame.event.pump()
 
@@ -1369,7 +1392,7 @@ if __name__ == '__main__':
                                    gl_=GL,
                                    offset_=GL.player.rect.center,
                                    nuke_=False, propulsion_=True,
-                                   timing_=15)
+                                   timing_=0)
                 GL.GROUP_UNION.add(hm)
 
                 # missile moving clockwise
@@ -1443,15 +1466,17 @@ if __name__ == '__main__':
 
         GL.All.update()
 
-        # display the all missile particles
-        # if any in the VERTEX_ARRAY_MP
+
         if len(VERTEX_ARRAY_MP) > 0:
-            missile_particles(GL.screen)
+            missile_particles(GL.screen, dt)
 
         GL.All.draw(SCREEN)
 
         # Cap the speed at 60 FPS
-        GL.TIME_PASSED_SECONDS = clock.tick(60)
+        GL.TIME_PASSED_SECONDS = clock.tick(MAXFPS)
+        dt += GL.TIME_PASSED_SECONDS
+        if dt >= 16.0:
+            dt = GL.TIME_PASSED_SECONDS
 
         pygame.display.flip()
 
@@ -1461,8 +1486,8 @@ if __name__ == '__main__':
         GL.SC_spaceship.update()
         GL.SC_explosion.update()
 
-        print(clock.get_fps(), len(VERTEX_ARRAY_MP), GL.FRAME)
-        # print(len(GL.PLAYER_GROUP), len(GL.GROUP_UNION))
+        # print(clock.get_fps(), len(VERTEX_ARRAY_MP), GL.FRAME)
+
         GL.FRAME += 1
 
     # Create a video

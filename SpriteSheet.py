@@ -1,46 +1,36 @@
-# encoding: utf-8
-"""
 
-                   GNU GENERAL PUBLIC LICENSE
-
-                       Version 3, 29 June 2007
-
-
- Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
-
- Everyone is permitted to copy and distribute verbatim copies
-
- of this license document, but changing it is not allowed.
- """
-
-__author__ = "Yoann Berenguer"
-__copyright__ = "Copyright 2007, Cobra Project"
-__credits__ = ["Yoann Berenguer"]
-__license__ = "GPL"
-__version__ = "1.0.0"
-__maintainer__ = "Yoann Berenguer"
-__email__ = "yoyoberenguer@hotmail.com"
-__status__ = "Alpha Demo"
-
+from numpy import uint8, frombuffer
 import pygame
-import numpy
-
-import warnings
-
-warnings.simplefilter(action='ignore')
 
 
 class ERROR(BaseException):
     pass
 
 
-def spread_sheet_per_pixel(file_: str, chunk: int, rows_: int, columns_: int) -> list:
+def load_per_pixel(file: str) -> pygame.Surface:
+    """ Not compatible with 8 bit depth color surface"""
+
+    assert isinstance(file, str), 'Expecting path for argument <file> got %s: ' % type(file)
+    try:
+        surface = pygame.image.load(file)
+        buffer_ = surface.get_view('2')
+        w, h = surface.get_size()
+        source_array = frombuffer(buffer_, dtype=uint8).reshape((w, h, 4))
+
+        surface_ = pygame.image.frombuffer(source_array.copy(order='C'),
+                                   (tuple(source_array.shape[:2])), 'RGBA').convert_alpha()
+        return surface_
+    except pygame.error:
+        raise SystemExit('\n[-] Error : Could not load image %s %s ' % (file, pygame.get_error()))
+
+
+def sprite_sheet_per_pixel(file_: str, chunk: int, rows_: int, columns_: int) -> list:
     """ Not to be used with asymetric surface """
     surface = pygame.image.load(file_)
     buffer_ = surface.get_view('2')
 
     w, h = surface.get_size()
-    source_array = numpy.frombuffer(buffer_, dtype=numpy.uint8).reshape((h, w, 4))
+    source_array = frombuffer(buffer_, dtype=uint8).reshape((h, w, 4))
     animation = []
 
     for rows in range(rows_):
@@ -55,7 +45,7 @@ def spread_sheet_per_pixel(file_: str, chunk: int, rows_: int, columns_: int) ->
     return animation
 
 
-def spread_sheet_fs8(file: str, chunk: int, rows_: int, columns_: int, tweak_: bool = False, *args) -> list:
+def sprite_sheet_fs8(file: str, chunk: int, rows_: int, columns_: int, tweak_: bool = False, *args) -> list:
     """ surface fs8 without per pixel alpha channel """
     assert isinstance(file, str), 'Expecting string for argument file got %s: ' % type(file)
     assert isinstance(chunk, int), 'Expecting int for argument number got %s: ' % type(chunk)

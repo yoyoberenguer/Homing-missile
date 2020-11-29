@@ -11,11 +11,20 @@
 
  of this license document, but changing it is not allowed.
  """
+
+__author__ = "Yoann Berenguer"
+__copyright__ = "Copyright 2007, Cobra Project"
+__credits__ = ["Yoann Berenguer"]
+__license__ = "GPL"
+__version__ = "1.0.0"
+__maintainer__ = "Yoann Berenguer"
+__email__ = "yoyoberenguer@hotmail.com"
+
 import math
 from math import degrees, atan2, cos, sin, radians, pi
 import pygame
 from random import uniform, randint
-from SpriteSheet import spread_sheet_fs8, spread_sheet_per_pixel
+from SpriteSheet import sprite_sheet_fs8, sprite_sheet_per_pixel
 
 from Surface import reshape, make_surface, make_array
 import numpy
@@ -23,12 +32,12 @@ import numpy
 DEG_TO_RAD = pi / 180
 RAD_TO_DEG = 1 / DEG_TO_RAD
 
-MISSILE_TRAIL = spread_sheet_per_pixel('Smoke_trail_2_64x64_alpha.png', 64, 6, 6)
+MISSILE_TRAIL = sprite_sheet_per_pixel('Assets\\Smoke_trail_2_64x64_alpha.png', 64, 6, 6)
 last_image = MISSILE_TRAIL[len(MISSILE_TRAIL) - 1]
 w, h = last_image.get_size()
 MISSILE_TRAIL = pygame.transform.smoothscale(last_image, (int(w * 1.2), int(h * 1.2)))
 del last_image, w, h
-MISSILE_TRAIL1 = spread_sheet_fs8('Smoke_trail_2_64x64.png', 64, 6, 6)
+MISSILE_TRAIL1 = sprite_sheet_fs8('Assets\\Smoke_trail_2_64x64.png', 64, 6, 6)
 
 
 func = numpy.linspace(0.8, 1.2, len(MISSILE_TRAIL1))
@@ -86,8 +95,8 @@ def projection(
     p_ = pygame.math.Vector2(rect_.x + cos(rotation) * length,
                              rect_.y + sin(rotation) * length)
 
-    # Return the point coordinates to match its position on the screen
-    # eg. x = rect_.centerx + cos(theta)* length and y = rect_.centerx + sin(theta) * length
+    # Return the point coordinates to match its position on the SCREEN
+    # eg. x = rect_.centerx + cos(theta)* width and y = rect_.centerx + sin(theta) * width
     return p_
 
 
@@ -110,16 +119,16 @@ def projection_1(
     rotation = radians(((p_angle * RAD_TO_DEG) % 360 + angle_ - 90) % 360)
     p_ = pygame.math.Vector2(rect_.x + cos(rotation) * length,
                              rect_.y - sin(rotation) * length)
-    # Return the point coordinates to match its position on the screen
-    # eg. x = rect_.x + cos(theta)* length and y = rect_.y + sin(theta) * length
+    # Return the point coordinates to match its position on the SCREEN
+    # eg. x = rect_.x + cos(theta)* width and y = rect_.y + sin(theta) * width
     return p_
 
 
-def missile_particles(screen):
-    """ display all the particles onto the screen bitmap."""
+def missile_particles(screen, dt):
+    """ display all the particles onto the SCREEN bitmap."""
     for sprite in VERTEX_ARRAY_MP:
         if sprite.rect.colliderect(screen.get_rect()):
-            if sprite.index < len(sprite.images) -1:
+            if sprite.index < len(sprite.images) - 1:
 
                 sprite.image = sprite.images[sprite.index].convert()
                 sprite.rect = sprite.image.get_rect(center=sprite.position)
@@ -128,13 +137,14 @@ def missile_particles(screen):
                 screen.blit(sprite.image, (sprite.rect.centerx - sprite.rect.w // 2,
                                            sprite.rect.centery - sprite.rect.h // 2 - 2),
                             special_flags=pygame.BLEND_RGB_ADD)
-
                 sprite.rect.move_ip(sprite.vector)
-                sprite.position += sprite.vector
 
-                # Kill the instance and remove the particle from
-                # the vertex_array when the index reach the end of the sprite animation.
-                sprite.index += 2
+                if dt > 8.0:
+                    sprite.position += sprite.vector
+
+                    # Kill the instance and remove the particle from
+                    # the vertex_array when the index reach the end of the sprite animation.
+                    sprite.index += 2
             else:
                 sprite.kill()
         else:
@@ -174,8 +184,8 @@ if __name__ == '__main__':
     pygame.display.init()
     SCREEN = pygame.display.set_mode(SCREENRECT.size,  pygame.HWSURFACE, 32)
 
-    MISSILE_TRAIL = spread_sheet_fs8('Assets\\Graphics\\Exhaust\\2\\Hot_trail_128x128_.png', 128, 5, 5)
-    # MISSILE_TRAIL = spread_sheet_per_pixel('Assets\\Graphics\\Exhaust\\2\\Hot_trail_128x128_4x8.png', 128, 8, 4)
+    MISSILE_TRAIL = sprite_sheet_fs8('Assets\\Graphics\\Exhaust\\2\\Hot_trail_128x128_.png', 128, 5, 5)
+    # MISSILE_TRAIL = sprite_sheet_per_pixel('Assets\\Graphics\\Exhaust\\2\\Hot_trail_128x128_4x8.png', 128, 8, 4)
     MISSILE_TRAIL = reshape(MISSILE_TRAIL, (50, 50))
     MISSILE_TRAIL = MISSILE_TRAIL[:13]
 
