@@ -7,10 +7,20 @@
 Run the program Homingmissile.py with your favorite python IDE 
 
 Requirement: 
-* Numpy
-* Python 3
+pip install numpy==1.19.3 pygame==2.0 opencv-python cython matplotlib
 
+- Numpy
+- Python > 3
+- OpenCv
+- pygame
+```
+## Keys
+```
 SPACE BAR : for shooting missiles 
+RIGH      : spaceship move to the right
+left      : spaceship move to the left
+up        : spaceship move up 
+down      : spaceship move down
 ESC       : to exit 
 ```
 
@@ -61,10 +71,14 @@ Cython version include the following features :
 Requirment :
 
 ```
+pip install pygame==2.0 nump==1.19.3 opencv-python cython matplotlib
+
 - python > 3.0
 - numpy arrays
 - pygame with SDL version 1.2 (SDL version 2 untested)
-  Cython
+- Cython
+- opencv-python
+- matplotlib
 - A compiler such visual studio, MSVC, CGYWIN setup correctly
   on your system.
   - a C compiler for windows (Visual Studio, MinGW etc) install on your system 
@@ -72,11 +86,9 @@ Requirment :
   Note that some adjustment might be needed once a compiler is install on your system, 
   refer to external documentation or tutorial in order to setup this process.
   e.g https://devblogs.microsoft.com/python/unable-to-find-vcvarsall-bat/
-  - Matplotlib
-  - cv2  (OPENCV)
 ```
 
-Compilation :
+## Source Compilation :
 
 ```
 In a command prompt and under the directory containing the source files (Cython Version folder)
