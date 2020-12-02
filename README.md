@@ -2,6 +2,11 @@
 
 ## 2D video game guided missile algorithm
 
+## New version
+```
+Install the program using Setup_HomingMissile.exe
+```
+
 ## Python Version
 ```
 Run the program Homingmissile.py with your favorite python IDE 
