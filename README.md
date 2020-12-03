@@ -27,6 +27,8 @@ left      : spaceship move to the left
 up        : spaceship move up 
 down      : spaceship move down
 ESC       : to exit 
+
+Mouse position to control targer spaceship 
 ```
 
 ## Cython Version 
