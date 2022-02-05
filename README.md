@@ -33,7 +33,7 @@ Mouse position to control targer spaceship
 ```
 
 ## Cython Version 
-```
+
 Amazing version with many particles and extremely fluid animation.
 
 FOLDER     : Cython Version
@@ -44,37 +44,32 @@ Run the program HomingMissile.py with your favorite python IDE  **
 
 Cython version include the following features : 
 
-- MISSILE GUIDANCE
+- `MISSILE GUIDANCE`  
+    Return the optimized angle a missile needs to follow in order to hit a target quicker. 
+    The missile efficiency is limited with the variable max_rotation allowing the missile 
+    to turn a certain amount of degrees each frames. 
+    This features brings a bit more realism to the missile trajectory.
     
-    RETURN THE OPTIMIZED ANGLE A MISSILE NEEDS TO FOLLOW IN ORDER TO HIT A TARGET QUICKER.
-    THE MISSILE EFFICIENCY IS LIMITED WITH THE VARIABLE max_rotation ALLOWING THE MISSILE 
-    TO TURN A CERTAIN AMOUNT OF DEGREES EACH FRAMES. 
-    THIS FEATURES BRINGS A BIT MORE REALISM TO THE MISSILE TRAJECTORY.
+- `PURE PURSUIT ALGORITHM`
+    This missile adjust its direction by small incremental steps always aiming toward
+    the target position. This missile has a an on-board fuel tank limiting its maximal
+    velocity and flying distance. The missile can be shot in any direction from the player position and
+    fly outside the display before heading back toward the playable area in order to hit its target.
+    The propulsion engine can be trigger at a later stage using the variable propulsion.
+    A launch offset can be added to simulate a launch under the aircraft wings.
+    If the target is destroyed before the missile collision, the missile will resume its course
+    to the latest calculated target vector direction (prior target explosion)    
     
-- PURE PURSUIT ALGORITHM
+- `LEAD COLLISION` (proportional navigation) more effective, follow an optimal path
+    Intercept theorem (Thales basic proportionality theorem)
+    https://www.youtube.com/watch?v=T2fPKUfmnKo
+    https://codereview.stackexchange.com/questions/86421/line-segment-to-circle-collision-algorithm
 
-    Guided ballistic missile :
-        This missile adjust its direction by small incremental steps always aiming toward
-        the target position. This missile has a an on-board fuel tank limiting its maximal
-        velocity and flying distance. The missile can be shot in any direction from the player position and
-        fly outside the display before heading back toward the playable area in order to hit its target.
-        The propulsion engine can be trigger at a later stage using the variable propulsion.
-        A launch offset can be added to simulate a launch under the aircraft wings.
-        If the target is destroyed before the missile collision, the missile will resume its course
-        to the latest calculated target vector direction (prior target explosion)    
-    
-- LEAD COLLISION (proportional navigation) more effective, follow an optimal path
+ - `PURE PURSUIT` with acceleration/deceleration
+    Homing missile (guided missile) with automatic gradual acceleration/deceleration.
+    this projectile is capable of very sharp angle.
+    It can accelerate in straight trajectory and decelerate in the turns to increase manoeuvrability
 
-        Intercept theorem (Thales basic proportionality theorem)
-        https://www.youtube.com/watch?v=T2fPKUfmnKo
-        https://codereview.stackexchange.com/questions/86421/line-segment-to-circle-collision-algorithm
-
- - PURE PURSUIT ALGORITHM
- 
-        HOMING MISSILE (GUIDED MISSILE) WITH AUTOMATIC GRADUAL ACCELERATION/DECELERATION.
-        THIS PROJECTILE IS CAPABLE OF VERY SHARP ANGLE.
-        IT CAN ACCELERATE IN STRAIGHT TRAJECTORY AND DECELERATE IN THE TURNS TO INCREASE MANOEUVRABILITY
-```
 
 Requirment :
 
