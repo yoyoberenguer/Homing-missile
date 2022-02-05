@@ -2,7 +2,7 @@
 
 ## 2D video game guided missile algorithm
 
-## New version
+## DEMO
 ```
 Install the program using Setup_HomingMissile.exe
 ```
@@ -19,6 +19,7 @@ pip install numpy==1.19.3 pygame==2.0 opencv-python cython matplotlib
 - OpenCv
 - pygame
 ```
+
 ## Keys
 ```
 SPACE BAR : for shooting missiles 
@@ -55,12 +56,12 @@ Cython version include the following features :
     Guided ballistic missile :
         This missile adjust its direction by small incremental steps always aiming toward
         the target position. This missile has a an on-board fuel tank limiting its maximal
-        velocity and flying distance. It can be shot in any direction from the player position and
-        fly outside the display before heading back to the playable area in order to hit the target.
+        velocity and flying distance. The missile can be shot in any direction from the player position and
+        fly outside the display before heading back toward the playable area in order to hit its target.
         The propulsion engine can be trigger at a later stage using the variable propulsion.
         A launch offset can be added to simulate a launch under the aircraft wings.
-        If the target is destroyed before the missile collision, it will resume its course
-        to the latest calculated vector direction (prior target explosion)    
+        If the target is destroyed before the missile collision, the missile will resume its course
+        to the latest calculated target vector direction (prior target explosion)    
     
 - LEAD COLLISION (proportional navigation) more effective, follow an optimal path
 
