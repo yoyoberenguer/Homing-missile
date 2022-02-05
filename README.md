@@ -4,7 +4,7 @@
 
 ## DEMO
 ```
-Install the program using Setup_HomingMissile.exe
+Click on the release and install the demo
 ```
 
 ## Python Version
