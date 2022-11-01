@@ -61,24 +61,22 @@ running in a different thread.
 ---
 ## OPENMP for Linux and Windows
 
-If you need to build the package without multiprocessing, you can change the flag OPENMP  
+If you need to build the package with multiprocessing, you can change the flag OPENMP  
 in the setup.py file such as :
 
-To build the package without multiprocessing (OPENMP=False)
-
+To build the package with multiprocessing (OPENMP=True)
 
 *in the setup.py file*
 ```bash
 # True enable the multiprocessing
-OPENMP = False
+OPENMP = True
 OPENMP_PROC = "-fopenmp" 
-__VERSION__ = "1.0.8" 
-LANGUAGE = "c++"
+LANGUAGE = "c"
 ext_link_args = ""
 
 
 ```
-*Then compile the code (e.g : Version 1.0.8, 64-bit python3.7)*
+*Then compile the code (e.g : Version 1.0.0, 64-bit python3.7)*
 ```cmdline
 C:\...HomingMissile\python setup.py bdist_wheel 
 cd dist
