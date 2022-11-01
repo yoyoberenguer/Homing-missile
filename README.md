@@ -30,6 +30,9 @@ C:\>python homingmissile.py
 ```
 ![alt text](https://github.com/yoyoberenguer/Homing-missile/blob/master/HomingMissile/Assets/HomingMissile1.PNG)
 
+
+![alt text](https://github.com/yoyoberenguer/Homing-missile/blob/master/HomingMissile/Assets/HomingMissile2.PNG)
+
 ## Missile attributes definition
 
 The XML file `Weapon.xml` contains 4 different missile type:
