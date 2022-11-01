@@ -9,17 +9,18 @@ The project is under the `GNU GENERAL PUBLIC LICENSE Version 3`
 
 #### When do you need to compile the cython code ? 
 
-Each time you are modifying any of the pyx files such as 
-shader.pyx, shader.pxd, __init__.pxd or any external C code if applicable
+The first time compilation and each time you are modifying any 
+of the pyx files such as Sprites.pyx, Sprites.pxd, *.pyx and *.pxd __init__.pxd 
+or any external C code if applicable
 
 1) open a terminal window
-2) Go in the main project directory where (shader.pyx & 
-   shader.pxd files are located)
-3) run : `C:\>python setup_shader.py build_ext --inplace --force`
+2) Go in the main project directory `HomingMissile` where (setup.py & requirements.txt
+   are located)
+3) run : `C:\>python setup.py build_ext --inplace --force`
 
 If you have to compile the code with a specific python 
 version, make sure to reference the right python version 
-in (`python38 setup_shader.py build_ext --inplace`)
+in (`python38 setup.py build_ext --inplace`)
 
 If the compilation fail, refers to the requirement section and 
 make sure Cython and a C-compiler are correctly install on your
@@ -34,7 +35,7 @@ make sure Cython and a C-compiler are correctly install on your
     
 https://devblogs.microsoft.com/python/unable-to-find-vcvarsall-bat/
 
-*Edit the file setup_shader.py and check the variable OPENMP.*
+*Edit the file setup.py and check the variable OPENMP.*
 *You can enable or disable multi-processing*
 ```python
 # Build the cython code with mutli-processing (OPENMP) 
@@ -42,7 +43,7 @@ OPENMP = True
 ```
 *Save the change and build the cython code with the following instruction:*
 ```bash
-C:\PygameShader\PygameShader\python setup_shader.py build_ext --inplace --force
+C:\...HomingMissile\python setup.py build_ext --inplace --force
 ````
 *If the project build successfully, the compilation will end up with the following lines*
 ```
@@ -55,12 +56,12 @@ running in a different thread.
 - Pygame version >3
 - numpy >= 1.18
 - cython >=0.29.21 (C extension for python) 
+- PygameShader>=1.0.8 
 - A C compiler for windows (Visual Studio, MinGW etc)
 ---
 ## OPENMP for Linux and Windows
 
-The pip packages (including LINUX architectures i686 and x86_64), are build by default with multiprocessing for 
-the CPU's shader. If you need to build the package without multiprocessing, you can change the flag OPENMP  
+If you need to build the package without multiprocessing, you can change the flag OPENMP  
 in the setup.py file such as :
 
 To build the package without multiprocessing (OPENMP=False)
@@ -79,7 +80,7 @@ ext_link_args = ""
 ```
 *Then compile the code (e.g : Version 1.0.8, 64-bit python3.7)*
 ```cmdline
-C:\PygameShader\python setup.py bdist_wheel 
+C:\...HomingMissile\python setup.py bdist_wheel 
 cd dist
 pip install PygameShader-1.0.8-cp37-cp37m-win_amd64.whl
 ```
@@ -98,10 +99,10 @@ Yoann Berenguer
 numpy >= 1.18
 pygame >=2.0.0
 cython >=0.29.21
-*Cupy   
+PygameShader>=1.0.8
+   
 ```
-(*) Used for GPU shader (not compulsory during installation). In order to use the GPU shaders 
-you would need to have a NVIDIA graphic card, CUDA and CUPY install sucessfully on your platform. 
+
 
 ## License :
 
@@ -113,10 +114,3 @@ Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
 Everyone is permitted to copy and distribute verbatim copies
 of this license document, but changing it is not allowed.
 
-
-## Testing: 
-```python
->>> import PygameShader
->>> from PygameShader.tests.test_shader import run_testsuite
->>> run_testsuite()
-```
