@@ -307,7 +307,7 @@ if __name__ == '__main__':
                     s = HomingMissile(
                         gl_=GL,
                         group_=(GL.ALL, GL.PLAYER_PROJECTILE),
-                        weapon_features_=BUMBLEBEE_FEATURES,
+                        weapon_features_=WASP_FEATURES,
                         extra_attributes=extra,
                         timing_=800,
                         )
