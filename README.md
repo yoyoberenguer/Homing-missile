@@ -4,8 +4,25 @@
 The project is under the `GNU GENERAL PUBLIC LICENSE Version 3`
 
 ---
+## Building project from source
+1) Download the latest release from here:
 
-## Building Cython & C code 
+   example ==> https://github.com/yoyoberenguer/Homing-missile/releases/tag/v1.0.2 
+2) Decompress the archive and enter the project directory 
+   ```script
+   c:\>cd Homing-missile-1.0.2
+   C:\>python setup.py build_ext --inplace --force
+   ```
+   
+## Run the demo 
+
+In `Homing-missile-1.0.2`
+```script
+C:\>cd HomingMissile 
+C:\>python homingmissile.py
+```
+
+## Building Cython & C 
 
 #### When do you need to compile the cython code ? 
 
@@ -35,16 +52,6 @@ make sure Cython and a C-compiler are correctly install on your
     
 https://devblogs.microsoft.com/python/unable-to-find-vcvarsall-bat/
 
-*Edit the file setup.py and check the variable OPENMP.*
-*You can enable or disable multi-processing*
-```python
-# Build the cython code with mutli-processing (OPENMP) 
-OPENMP = True
-```
-*Save the change and build the cython code with the following instruction:*
-```bash
-C:\...HomingMissile\python setup.py build_ext --inplace --force
-````
 *If the project build successfully, the compilation will end up with the following lines*
 ```
 Generating code
@@ -80,7 +87,7 @@ ext_link_args = ""
 ```cmdline
 C:\...HomingMissile\python setup.py bdist_wheel 
 cd dist
-pip install HomingMissile-1.0.0-xxxx-win_amd64.whl
+pip install HomingMissile-xxxx-win_amd64.whl
 ```
 
 ---
