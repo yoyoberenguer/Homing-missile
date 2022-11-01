@@ -16,6 +16,13 @@ The project is under the `GNU GENERAL PUBLIC LICENSE Version 3`
    
 ## Run the demo 
 
+**Key**                     | Assignement 
+----------------------------|-----------------------------------------------------
+**ARROW KEYS**              | (LEFT, RIGHT, UP and DOWN) for spaceship direction
+**SPACEBAR**                |  Missiles
+**PAUSE/BREAK**             | Pause the demo
+**ESC**                     | to quit
+
 In `Homing-missile-1.0.2`
 ```script
 C:\>cd HomingMissile 
