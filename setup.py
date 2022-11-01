@@ -68,7 +68,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 OPENMP = False
 OPENMP_PROC = "-fopenmp" # "-lgomp"
-__VERSION__ = "1.0.0"
+__VERSION__ = "1.0.2"
 LANGUAGE = "c"  # "c++"
 ext_link_args = ""
 
