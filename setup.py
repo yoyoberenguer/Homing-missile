@@ -255,6 +255,8 @@ setuptools.setup(
          [
              'HomingMissile/Assets/ARCADE_R.ttf',
              'HomingMissile/Assets/bck1.jpg',
+             'HomingMissile/Assets/HomingMissile1.PNG',
+             'HomingMissile/Assets/HomingMissile2.PNG',
              'HomingMissile/Assets/illumDefault11.png',
              'HomingMissile/Assets/MISSILE1_.png',
              'HomingMissile/Assets/MISSILE2.png',
