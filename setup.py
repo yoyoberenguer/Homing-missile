@@ -51,6 +51,7 @@ warnings.filterwarnings("ignore", category=RuntimeWarning)
 warnings.filterwarnings("ignore", category=ImportWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
+
 # NUMPY IS REQUIRED
 try:
     import numpy
@@ -67,8 +68,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 OPENMP = False
 OPENMP_PROC = "-fopenmp" # "-lgomp"
-__VERSION__ = "1.0.8"  # check the file shader.pyx and make sure the version is identical
-LANGUAGE = "c" #"c++"
+__VERSION__ = "1.0.0"
+LANGUAGE = "c"  # "c++"
 ext_link_args = ""
 
 py_requires = "HomingMissile requires python3 version 3.6 or above."
@@ -113,6 +114,7 @@ if hasattr(platform, "platform"):
 else:
     raise AttributeError("Platform library is missing attribute <platform>")
 
+ext_compile_args = []
 
 if plat.startswith("WINDOWS"):
     ext_compile_args = ["/openmp" if OPENMP else "", "/Qpar", "/fp:fast", "/O2", "/Oy", "/Ot"]
@@ -132,6 +134,9 @@ elif plat.startswith("LINUX"):
 else:
     raise ValueError("HomingMissile can be build on Windows and Linux systems only.")
 
+for r in ext_compile_args:
+    if r == "":
+        ext_compile_args.remove(r)
 
 print("\n---COMPILATION---\n")
 print("SYSTEM                : %s " % plat)
@@ -166,8 +171,8 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/yoyoberenguer/HomingMissile",
-    # packages=setuptools.find_packages(),
-    packages=['HomingMissile'],
+    packages=setuptools.find_packages(),
+    # packages=['HomingMissile'],
     ext_modules=cythonize(module_list=[
         Extension("HomingMissile.Weapon", ["HomingMissile/Weapon.pyx"],
                   extra_compile_args=ext_compile_args, extra_link_args=ext_link_args,
@@ -225,16 +230,13 @@ setuptools.setup(
           'pyproject.toml',
           'README.md',
           'requirements.txt',
-          # 'HomingMissile/__init__.py',
-          # 'HomingMissile/__init__.pxd',
-          # 'HomingMissile/setup.py',
           'HomingMissile/Weapon.pyx',
           'HomingMissile/XML_parsing.pyx',
           'HomingMissile/Var.py',
           'HomingMissile/Textures.py',
           'HomingMissile/SpriteSheet.pyx',
           'HomingMissile/Sprites.pyx',
-          'HomingMissile/Sprites.pxd'
+          'HomingMissile/Sprites.pxd',
           'HomingMissile/SoundServer.pyx',
           'HomingMissile/Player.py',
           'HomingMissile/MissileParticleFX.pyx',
@@ -247,36 +249,26 @@ setuptools.setup(
           ]),
         ('./lib/site-packages/HomingMissile/tests',
          [
-             'HomingMissile/test/SpriteTest.py',
-             'HomingMissile/test/test_vector.c',
+             'HomingMissile/test/test_vector.c'
           ]),
         ('./lib/site-packages/HomingMissile/Assets',
          [
-             'HomingMissile/Assets/A2.jpg',
              'HomingMissile/Assets/ARCADE_R.ttf',
-             'HomingMissile/Assets/HotFurnace_256x256_.png',
+             'HomingMissile/Assets/bck1.jpg',
              'HomingMissile/Assets/illumDefault11.png',
              'HomingMissile/Assets/MISSILE1_.png',
-             'HomingMissile/Assets/MISSILE2.BMP',
              'HomingMissile/Assets/MISSILE2.png',
              'HomingMissile/Assets/MISSILE2_.png',
              'HomingMissile/Assets/MISSILE3.png',
              'HomingMissile/Assets/MISSILE3_.png',
              'HomingMissile/Assets/missile4.png',
-             'HomingMissile/Assets/missile4_.jpg',
              'HomingMissile/Assets/sd_weapon_missile_heavy_01.wav',
              'HomingMissile/Assets/Smoke_trail_2_64x64.png',
              'HomingMissile/Assets/Smoke_trail_2_64x64_alpha.png',
              'HomingMissile/Assets/Smoke_trail_3_256x256_.png',
              'HomingMissile/Assets/Smoke_trail_4_128x128_.png',
              'HomingMissile/Assets/SpaceShip.png',
-             'HomingMissile/Assets/yckBdy5cE.png'
          ]),
-        ('./lib/site-packages/HomingMissile/Demo',
-         [
-             # 'HomingMissile/Demo/cloud_smoke_effect.py'
-
-         ])
     ],
 
     project_urls={  # Optional
