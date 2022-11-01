@@ -19,8 +19,8 @@ The project is under the `GNU GENERAL PUBLIC LICENSE Version 3`
 **Key**                     | Assignement 
 ----------------------------|-----------------------------------------------------
 **ARROW KEYS**              | (LEFT, RIGHT, UP and DOWN) for spaceship direction
-**SPACEBAR**                |  Missiles
-**PAUSE/BREAK**             | Pause the demo
+**SPACEBAR**                | Fire missiles
+**PAUSE/BREAK**             | Pause the demo for 2 secs
 **ESC**                     | to quit
 
 In `Homing-missile-1.0.2`
@@ -29,6 +29,104 @@ C:\>cd HomingMissile
 C:\>python homingmissile.py
 ```
 ![alt text](https://github.com/yoyoberenguer/Homing-missile/blob/master/HomingMissile/Assets/HomingMissile1.PNG)
+
+## Missile attributes definition
+
+The XML file `Weapon.xml` contains 4 different missile type:
+- STINGER
+- BUMBLEBEE
+- WASP 
+- HORNET
+
+```xml
+<?xml version="1.0"?>
+<class>
+    <category name = "MISSILE">
+        <modes>
+            <mode name = "GUIDED">
+                <weapon name="STINGER"
+                        type="Missile"
+                        image="STINGER_IMAGE"
+                        sprite_orientation="90"
+                        sprite_rotozoom ="STINGER_ROTATE_BUFFER"
+                        propulsion_sound_fx="STINGER_EXHAUST_SOUND"
+                        missile_trail_fx="MISSILE_TRAIL_DICT2"
+                        missile_trail_fx_blend = "pygame.BLEND_RGB_ADD"
+                        animation='None'
+                        range='SCREENRECT.h'
+                        bingo_range = '(100, 120)'
+                        velocity='-15'
+                        damage='1050'
+                        timestamp='0'
+                        reloading_time='2'
+                        detonation_dist='None'
+                        max_rotation='10'>
+```
+
+The file Weapon.pyx contains all the missile class such as 
+- HomingMissile
+  ```
+  PURE PURSUIT ALGORITHM
+  Guided ballistic missile :
+  This missile adjust its direction by adding small degrees values (turn radius) until
+  reaching the optimal angle difference (0 degrees).
+  The missile in on collision course when the angle between the missile heading and the
+  target heading difference is approximately null.        
+  ```
+- InterceptMissile
+  ```
+  LEAD COLLISION (proportional navigation) more effective, follow an optimal path
+  Intercept theorem (Thales basic proportionality theorem)
+  https://www.youtube.com/watch?v=T2fPKUfmnKo
+  https://codereview.stackexchange.com/questions/86421/line-segment-to-circle-collision-algorithm
+  ```
+- AdaptiveMissile
+  ```
+  Homing missile (guided missile) with automatic gradual acceleration/deceleration.
+  This projectile is capable of very sharp angle.
+  It can accelerate in straight trajectory and decelerate in the turns to increase manoeuvrability
+  ```
+  
+## How to shoot a missile in your code 
+
+Check HomingMissile.py to see how to use the missile library.
+
+Below an example with the class `HomingMissile` using the missile STINGER
+
+```python
+extra = ExtraAttributes(
+   {'target': target,
+    'shoot_angle': 90,
+    'ignition': False,
+    'offset': (30, 0)})
+
+s = HomingMissile(
+   gl_=GL,
+   group_=(GL.ALL, GL.PLAYER_PROJECTILE),
+   weapon_features_=STINGER_FEATURES,
+   extra_attributes=extra,
+   timing_=800,
+)
+```
+and below for the class `InterceptMissile` using the 
+missile BUMBLEBEE
+
+```python
+extra = ExtraAttributes(
+   {'target': target,
+    'shoot_angle': 90,
+    'ignition': False,
+    'offset': (30, 0)})
+
+s = InterceptMissile(
+   gl_=GL,
+   group_=(GL.ALL, GL.PLAYER_PROJECTILE),
+   weapon_features_=BUMBLEBEE_FEATURES,
+   extra_attributes=extra,
+   timing_=800,
+)
+```
+
 
 ## Building Cython & C 
 
@@ -91,11 +189,9 @@ ext_link_args = ""
 
 
 ```
-*Then compile the code (e.g : Version 1.0.0, 64-bit python3.7)*
+*Then compile the code (e.g :)*
 ```cmdline
-C:\...HomingMissile\python setup.py bdist_wheel 
-cd dist
-pip install HomingMissile-xxxx-win_amd64.whl
+C:\...HomingMissile\python setup.py build_ext --inplace
 ```
 
 ---
