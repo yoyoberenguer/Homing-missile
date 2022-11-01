@@ -80,13 +80,9 @@ ext_link_args = ""
 ```cmdline
 C:\...HomingMissile\python setup.py bdist_wheel 
 cd dist
-pip install PygameShader-1.0.8-cp37-cp37m-win_amd64.whl
+pip install HomingMissile-1.0.0-xxxx-win_amd64.whl
 ```
 
-*The same variable `OPENMP` exist also in the setup_config.py file when building the Cython code*
-
-* Building PygameShader package will automatically check and compile the source code, you do not 
-need to build manually the Cython code.
 ---
 
 ## Credit
