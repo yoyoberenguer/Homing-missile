@@ -12,8 +12,8 @@
 Copyright Yoann Berenguer
 """
 
-
 import math
+import time
 
 try:
     import pygame
@@ -234,7 +234,7 @@ if __name__ == '__main__':
     GL_ALL_draw = GL.ALL.draw
     DT = 0
     s = None
-
+    lock = 0
     while not STOP_GAME:
 
         pygame.event.pump()
@@ -243,13 +243,11 @@ if __name__ == '__main__':
 
         keys = pygame.key.get_pressed()
 
-        while GL.PAUSE:
-            pygame.event.pump()
-            for event in pygame.event.get():
-                keys = pygame.key.get_pressed()
-                if keys[pygame.K_PAUSE]:
-                    GL.PAUSE = False
-                    pygame.event.clear()
+        if keys[pygame.K_PAUSE]:
+            lock = time.time()
+
+        while time.time() - lock < 2:
+            ...
 
         for event in pygame.event.get():
 
@@ -309,7 +307,7 @@ if __name__ == '__main__':
                     s = HomingMissile(
                         gl_=GL,
                         group_=(GL.ALL, GL.PLAYER_PROJECTILE),
-                        weapon_features_=STINGER_FEATURES,
+                        weapon_features_=BUMBLEBEE_FEATURES,
                         extra_attributes=extra,
                         timing_=800,
                         )
@@ -320,10 +318,10 @@ if __name__ == '__main__':
                          'ignition': False,
                          'offset': (30, 0)})
 
-                    s = HomingMissile(
+                    s = InterceptMissile(
                         gl_=GL,
                         group_=(GL.ALL, GL.PLAYER_PROJECTILE),
-                        weapon_features_=STINGER_FEATURES,
+                        weapon_features_=BUMBLEBEE_FEATURES,
                         extra_attributes=extra,
                         timing_=800,
                     )
@@ -358,8 +356,7 @@ if __name__ == '__main__':
 
                     player.launch_missile()  # --> player fire the missile (hook method)
 
-        if keys[pygame.K_PAUSE]:
-            GL.PAUSE = True
+
 
         SCREEN.blit(BACKGROUND, (0, 0))
 
@@ -382,10 +379,10 @@ if __name__ == '__main__':
 
         FPS_AVG = show_fps(GL.SCREEN, t, FPS_AVG)
 
-        if s is not None:
-            show_heading(GL.SCREEN, s.heading, get_angle(
-                pygame.Vector2(s.target.rect.centerx, target.rect.centery),
-                pygame.Vector2(s.rect.centerx, s.rect.centery)))
+        # if s is not None:
+        #     show_heading(GL.SCREEN, s.heading, get_angle(
+        #         pygame.Vector2(s.target.rect.centerx, target.rect.centery),
+        #         pygame.Vector2(s.rect.centerx, s.rect.centery)))
 
         pygame_display_flip()
         GL.MIXER_PLAYER.update()
