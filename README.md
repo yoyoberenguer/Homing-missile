@@ -21,6 +21,7 @@ In `Homing-missile-1.0.2`
 C:\>cd HomingMissile 
 C:\>python homingmissile.py
 ```
+![alt text](https://github.com/yoyoberenguer/Homing-missile/blob/master/HomingMissile/Assets/HomingMissile1.PNG)
 
 ## Building Cython & C 
 
