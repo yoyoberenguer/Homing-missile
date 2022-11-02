@@ -86,7 +86,7 @@ Sound effect can also be changed with the variable `propulsion_sound_fx`
 ```
 
 
-## Missiles's classes 
+## Missiles classes 
 
 The file Weapon.pyx contains all the missile class such as 
 - HomingMissile
