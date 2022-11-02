@@ -22,6 +22,7 @@ The project is under the `GNU GENERAL PUBLIC LICENSE Version 3`
 **SPACEBAR**                | Fire missiles
 **PAUSE/BREAK**             | Pause the demo for 2 secs
 **ESC**                     | to quit
+**Mouse**                   | Move target
 
 In `Homing-missile-1.0.2`
 ```script
