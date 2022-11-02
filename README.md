@@ -3,7 +3,6 @@
 
 The project is under the `GNU GENERAL PUBLIC LICENSE Version 3`
 
----
 ## Building project from source
 
 1) Download the latest release from here:
@@ -14,7 +13,7 @@ The project is under the `GNU GENERAL PUBLIC LICENSE Version 3`
    c:\>cd Homing-missile-1.0.2
    C:\>python setup.py build_ext --inplace --force
    ```
---- 
+
 ## Run the demo 
 
 In `Homing-missile-1.0.2`
@@ -31,7 +30,6 @@ C:\>python homingmissile.py
 **ESC**                     | to quit
 **Mouse**                   | Move target
 
----
 
 ## Preview
 
@@ -40,7 +38,6 @@ C:\>python homingmissile.py
 
 ![alt text](https://github.com/yoyoberenguer/Homing-missile/blob/master/HomingMissile/Assets/HomingMissile2.PNG)
 
----
 
 ## Missile attributes
 
@@ -49,6 +46,7 @@ The XML file `Weapon.xml` contains 4 different missile type:
 - BUMBLEBEE
 - WASP 
 - HORNET
+
 ```
 Missile properties/attributes can be edited and changed in the XML. 
 You can change the missile velocity, reloading time, amount of damage, turn radius per frame etc 
@@ -61,7 +59,6 @@ missile_trail_fx="MISSILE_TRAIL_DICT2", you can passed a different sprite animat
 
 Sound effect can also be changed with the variable `propulsion_sound_fx`
 ```
-
 
 ```xml
 <?xml version="1.0"?>
@@ -88,7 +85,6 @@ Sound effect can also be changed with the variable `propulsion_sound_fx`
                   max_rotation='10'>
 ```
 
----
 
 ## Missiles's classes 
 
@@ -118,8 +114,6 @@ The file Weapon.pyx contains all the missile class such as
 This file contains also the following methods 
 - `fast_lead_collision`  (Written in Cython and provide a very fast calculation for missile intercept, returns a vector)
 - `lead_collision`       (written in Cython, this method returns a structure containing both, vectors and collision point)
-
----
 
 ## Code 
 
@@ -196,7 +190,6 @@ s = InterceptMissile(
    timing_=800,
 )
 ```
----
 
 ## Goodies 
 The file `SpriteSheet.pyx` contains two super fast algorithms for dealing with spritesheets
@@ -207,7 +200,6 @@ The file `SpriteSheet.pyx` contains two super fast algorithms for dealing with s
 - sprite_sheet_fs8 
   (for 24-bit 32-bit without alpha layer)
 ```
-
 
 ## Building Cython & C 
 
@@ -254,8 +246,6 @@ running in a different thread.
 - PygameShader >=1.0.8 
 - A C compiler for windows (Visual Studio, MinGW etc)
 
----
-
 ## OPENMP for Linux and Windows
 
 If you need to build the package with multiprocessing, you can change the flag OPENMP  
@@ -271,17 +261,11 @@ OPENMP_PROC = "-fopenmp"
 LANGUAGE = "c"
 ext_link_args = ""
 
-
 ```
 *Then compile the code (e.g :)*
 ```cmdline
 C:\...HomingMissile\python setup.py build_ext --inplace
 ```
-
----
-
-## Credit
-Yoann Berenguer 
 
 ## Dependencies :
 ```
@@ -292,6 +276,15 @@ PygameShader>=1.0.8
    
 ```
 
+## Your contribution 
+
+### Please report any bugs to 
+https://github.com/yoyoberenguer/Homing-missile/issues
+
+---
+
+## Credit
+Yoann Berenguer 
 
 ## License :
 
