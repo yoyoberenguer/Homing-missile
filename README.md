@@ -95,7 +95,7 @@ The file Weapon.pyx contains all the missile class such as
   Guided ballistic missile :
   This missile adjust its direction by adding small degrees values (turn radius) until
   reaching the optimal angle difference (0 degrees).
-  The missile in on collision course when the angle between the missile heading and the
+  The missile is in on collision course when the angle between the missile heading and the
   target heading difference is approximately null.        
   ```
 - InterceptMissile
