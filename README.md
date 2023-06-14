@@ -11,6 +11,8 @@ The project is under the `GNU GENERAL PUBLIC LICENSE Version 3`
 2) Decompress the archive and enter the project directory 
    ```script
    c:\>cd Homing-missile-1.0.2
+   
+   Refers to section Building Cython & C
    C:\>python setup.py build_ext --inplace --force
    ```
 
